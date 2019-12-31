@@ -1,15 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:ink_page_indicator/src/base/base.dart';
 
+/// A PageController for a PageView that uses a [PageIndicator].
+///
+/// This PageController should be used when explicitly animating
+/// to pages using `animateToPage` in order for the [PageIndicator]
+/// to be properly displayed.
 class PageIndicatorController extends PageController {
-
-  PageIndicatorState indicator;
+  PageIndicatorController({
+    int initialPage = 0,
+    bool keepPage = true,
+    double viewportFraction = 1.0,
+  }) : super(
+          initialPage: initialPage,
+          keepPage: keepPage,
+          viewportFraction: viewportFraction,
+        );
+        
+  // Allow multiple Indicators to listen on the same
+  // controller.
+  final List<PageIndicatorState> _indicators = [];
 
   void Function(int page, Duration duration) onAnimateToPage;
 
   @override
   Future<void> animateToPage(int page, {Duration duration, Curve curve}) async {
     final future = super.animateToPage(page, duration: duration, curve: curve);
-    indicator?.onAnimateToPage(page, future);
+
+    for (final indicator in _indicators) {
+      indicator.onAnimateToPage(page, future);
+    }
+  }
+
+  /// Registers the current indicator to listen for events of
+  /// this [PageIndicatorController].
+  void registerIndicator(PageIndicatorState indicator) {
+    _indicators.add(indicator);
+  }
+
+  /// Unregisters the current indicator to listen for events of
+  /// this [PageIndicatorController].
+  void unregisterIndicator(PageIndicatorState indicator) {
+    _indicators.remove(indicator);
+  }
+
+  @override
+  void dispose() {
+    for (final indicator in _indicators) {
+      unregisterIndicator(indicator);
+    }
+
+    super.dispose();
   }
 }

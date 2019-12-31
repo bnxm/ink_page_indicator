@@ -37,11 +37,14 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
   double get gap => data.gap;
 
   Color get activeColor => data.activeColor;
-  Color get inActiveColor => data.inActiveColor;
+  Color get inactiveColor => data.inactiveColor;
 
   final List<double> dots = [];
   double get currentDot => dots[currentPage];
   double get nextDot => dots[nextPage];
+
+  double get activeDotProgress => progress;
+  double get inactiveDotProgress => progress;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -57,8 +60,6 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
     final maxHeight = height;
 
     IndicatorShape adjustShape(IndicatorShape shape) {
-      print('$maxWidth, ${shape.width}, ${shape.isCircle}');
-
       if (shape.isCircle) {
         final isLarger = shape.width > maxWidth || shape.height > maxHeight;
         final circleSize = isLarger ? math.min(maxWidth, maxHeight) : null;
@@ -113,21 +114,35 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
   void drawInActiveIndicators() {
     final paint = Paint()
       ..isAntiAlias = true
-      ..color = inActiveColor;
+      ..color = inactiveColor;
 
     for (var i = 0; i < dots.length; i++) {
       final dx = dots[i];
-      final shape = i == nextPage ? this.shape.lerpTo(activeShape, progress) : this.shape;
+
+      final isCurrent = i == currentPage;
+      final isNext = i == nextPage;
+
+      IndicatorShape shape = this.shape;
+      if (isCurrent || isNext) {
+        // Lerp the next shape to the active shape and the current shape
+        // from the active shape to the inactive shape.
+        shape = this.shape.lerpTo(
+              activeShape,
+              isNext ? inactiveDotProgress : 1 - inactiveDotProgress,
+            );
+      }
 
       drawIndicator(dx, paint, shape);
     }
   }
 
-  void drawIndicator(double dx, Paint paint, [IndicatorShape customShape]) {
+  void drawIndicator(dynamic offset, Paint paint, [IndicatorShape customShape]) {
+    assert(offset is Offset || offset is num);
+
     final shape = customShape ?? this.shape;
 
     final rect = Rect.fromCenter(
-      center: Offset(dx, center.dy),
+      center: offset is Offset ? offset : Offset(offset.toDouble(), center.dy),
       width: shape.width,
       height: shape.height,
     );
@@ -180,6 +195,16 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
       canvas,
       paint,
     );
+  }
+
+  Offset getPathOffsetForFraction(Path path, double fraction) {
+    try {
+      final metrics = path.computeMetrics().first;
+      final length = metrics.length;
+      return metrics.getTangentForOffset(length * fraction).position;
+    } on Error {
+      return Offset.zero;
+    }
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ink_page_indicator/ink_page_indicator.dart';
 
 void main() => runApp(MyApp());
@@ -7,11 +8,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
+      title: 'Page Indicators',
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
+        /* appBar: AppBar(
+          title: Text('Page Indicators'),
+        ), */
         body: Home(),
       ),
     );
@@ -28,6 +30,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   PageIndicatorController controller;
 
+  IndicatorShape shape;
+  IndicatorShape activeShape;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +45,7 @@ class _HomeState extends State<Home> {
       result.add(
         SizedBox.expand(
           child: Container(
-            color: i.isOdd ? Colors.white : Colors.white,
+            color: i.isOdd ? Colors.grey.shade100 : Colors.grey.shade100,
           ),
         ),
       );
@@ -48,9 +53,39 @@ class _HomeState extends State<Home> {
     return result;
   }
 
+  Widget buildInkPageIndicator(InkStyle style) {
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: InkPageIndicator(
+              gap: 32,
+              padding: 16,
+              itemCount: 3,
+              shape: shape,
+              activeShape: activeShape,
+              inActiveColor: Colors.grey.shade500,
+              activeColor: Colors.grey.shade700,
+              inkColor: Colors.grey.shade400,
+              controller: controller,
+              style: style,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final children = _createChildren(5);
+    final children = _createChildren(3);
+
+    shape = IndicatorShape.circle(13);
+    activeShape = shape.copyWith();
+
+    SystemChrome.setEnabledSystemUIOverlays([]);
 
     return Stack(
       children: <Widget>[
@@ -58,20 +93,34 @@ class _HomeState extends State<Home> {
           controller: controller,
           children: children,
         ),
-        Align(
-          alignment: Alignment.center,
-          child: InkPageIndicator(
-            gap: 32,
-            padding: 16,
-            shape: IndicatorShape.ofCircle(16),
-            inActiveColor: Color(0xffC9C9C9),
-            activeColor: Color(0xff636363),
-            controller: controller,
-            itemCount: children.length,
-            style: InkStyle.modern,
-          ),
+        Column(
+          children: <Widget>[
+            buildInkPageIndicator(InkStyle.original),
+            buildInkPageIndicator(InkStyle.simple),
+            buildInkPageIndicator(InkStyle.translate),
+            buildInkPageIndicator(InkStyle.transition),
+            Expanded(
+              child: GestureDetector(
+                onTap: () => controller.animateToPage(
+                  controller.page != children.length - 1 ? children.length - 1 : 0,
+                  duration: Duration(milliseconds: 800),
+                  curve: Curves.ease,
+                ),
+                child: LeapingPageIndicator(
+                  controller: controller,
+                  itemCount: 3,
+                  gap: 32,
+                  padding: 16,
+                  shape: shape,
+                  activeShape: activeShape,
+                  inActiveColor: Colors.grey.shade400,
+                  activeColor: Colors.grey.shade700,
+                ),
+              ),
+            )
+          ],
         ),
-        Align(
+        /* Align(
           alignment: Alignment.bottomRight,
           child: Padding(
             padding: const EdgeInsets.all(24),
@@ -83,7 +132,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-        ),
+        ), */
       ],
     );
   }

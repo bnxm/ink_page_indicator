@@ -3,6 +3,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+/// A shape that can be used to customize the appearance
+/// of the indicators in a [PageIndicator].
 class IndicatorShape {
   final double width;
   final double height;
@@ -18,7 +20,7 @@ class IndicatorShape {
 
   bool get isCircle => width == height;
 
-  factory IndicatorShape.ofCircle(double radius) {
+  factory IndicatorShape.circle(double radius) {
     return IndicatorShape(
       width: radius * 2,
       height: radius * 2,

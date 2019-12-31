@@ -25,7 +25,7 @@ abstract class PageIndicator extends ImplicitAnimation {
     @required this.activeColor,
     @required this.inActiveColor,
     @required this.gap,
-  })  : shape = shape ?? IndicatorShape.ofCircle(8),
+  })  : shape = shape ?? IndicatorShape.circle(8),
         activeShape = activeShape ?? shape,
         assert(controller != null),
         assert(padding != null),
@@ -51,11 +51,11 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
 
   double _p = 0;
   double get page => _p;
-  set _page(double page) => _p = page.clamp(0.0, maxPages.toDouble());
+  set _page(double value) => _p = value.clamp(0.0, maxPages.toDouble());
 
   int _np = 0;
   int get nextPage => _np;
-  set _nextPage(int page) => _np = page.clamp(0, maxPages);
+  set _nextPage(int value) => _np = value.clamp(0, maxPages);
 
   int _currentPage = 0;
   int get currentPage => _currentPage;
@@ -72,33 +72,32 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
   void initState() {
     super.initState();
 
-    if (itemCount >= 2) {
-      _nextPage = 1;
-    }
-
     if (pageController != null) {
+      _currentPage = pageController.initialPage ?? 0;
+      _nextPage = _currentPage + 1;
+
       pageController
-        ..indicator = this
+        ..registerIndicator(this)
         ..addListener(_listener);
+    } else if (itemCount >= 2) {
+      _nextPage = 1;
     }
   }
 
   void _listener() {
-    final isAttached = pageController.hasClients;
-    if (!isAttached) return;
+    if (!pageController.hasClients) return;
 
     _page = pageController.page;
     _dir = pageController.position.userScrollDirection;
 
     _findNextPageIndices();
     _calculateScrollProgress();
-
     setState(() {});
   }
 
   void _debugPrint() {
     print(
-      '${page.toStringAsFixed(2)}, $currentPage, $nextPage, ${progress.toStringAsFixed(2)}, $dir',
+      '${page.toStringAsFixed(2)}, $currentPage, $nextPage, ${progress.toStringAsFixed(2)}, $dir, $inAnimation',
     );
   }
 
@@ -110,7 +109,7 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
     }
 
     // Save reached page as the new anchor
-    if (page.remainder(1) == 0.0 || (page - _currentPage).abs() > 1.0) {
+    if (page.remainder(1) == 0.0 || (page - _currentPage).abs() >= 1.0) {
       _currentPage = page.round();
     }
 
@@ -124,7 +123,7 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
 
   void onAnimateToPage(int page, Future future) async {
     inAnimation = true;
-    _currentPage = this.page.round();
+    _currentPage = this.page.floor();
     _progress = 0.0;
     _nextPage = page;
     await future;
@@ -138,6 +137,7 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
   @override
   void dispose() {
     pageController?.removeListener(_listener);
+    pageController?.unregisterIndicator(this);
     super.dispose();
   }
 }

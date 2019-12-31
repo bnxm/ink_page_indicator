@@ -2,34 +2,31 @@ import 'package:flutter/material.dart';
 
 import 'package:ink_page_indicator/src/src.dart';
 
-import 'ink_page_indicator_data.dart';
-import 'ink_page_indicator_painter.dart';
+import 'leaping_page_indicator_data.dart';
+import 'leaping_page_indicator_painter.dart';
 
-/// The style of an [InkPageIndicator].
-enum InkStyle {
-  
-  original,
-  simple,
-  translate,
-  transition,
+/// The style of an [LeapingPageIndicator].
+enum LeapingStyle {
+  normal,
 }
 
-class InkPageIndicator extends PageIndicator {
-  final Color inkColor;
-  final InkStyle style;
-  InkPageIndicator({
+class LeapingPageIndicator extends PageIndicator {
+  final double radii;
+  final LeapingStyle style;
+  LeapingPageIndicator({
     Key key,
     @required int itemCount,
     @required PageIndicatorController controller,
-    this.style = InkStyle.simple,
-    this.inkColor,
+    double radii,
+    this.style = LeapingStyle.normal,
     IndicatorShape shape,
     IndicatorShape activeShape,
     Color activeColor = Colors.black,
     Color inActiveColor = Colors.grey,
     double gap = 12.0,
     double padding = 8.0,
-  })  : assert(style != null),
+  })  : radii = radii ?? gap,
+        assert(style != null),
         assert(activeColor != null),
         assert(inActiveColor != null),
         assert(gap != null && gap >= 0.0),
@@ -46,29 +43,29 @@ class InkPageIndicator extends PageIndicator {
         );
 
   @override
-  InkPageIndicatorState createState() => InkPageIndicatorState();
+  LeapingPageIndicatorState createState() => LeapingPageIndicatorState();
 }
 
-class InkPageIndicatorState extends PageIndicatorState<InkPageIndicator, InkPageIndicatorData> {
+class LeapingPageIndicatorState extends PageIndicatorState<LeapingPageIndicator, LeapingIndicatorData> {
   @override
-  InkPageIndicatorData get newValue => InkPageIndicatorData(
+  LeapingIndicatorData get newValue => LeapingIndicatorData(
         activeColor: widget.activeColor,
         inactiveColor: widget.inActiveColor,
-        inkColor: widget.inkColor,
+        radii: widget.radii,
         gap: widget.gap,
         shape: widget.shape,
         activeShape: widget.activeShape,
       );
 
   @override
-  Widget builder(BuildContext context, InkPageIndicatorData data) {
+  Widget builder(BuildContext context, LeapingIndicatorData data) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: widget.padding),
       child: SizedBox(
         height: widget.shape.height,
         child: CustomPaint(
           size: Size.infinite,
-          painter: InkPageIndicatorPainter(this, data),
+          painter: LeapingPageIndicatorPainter(this, data),
         ),
       ),
     );

@@ -1,9 +1,10 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:ink_page_indicator/src/src.dart';
-import 'package:ink_page_indicator/src/ink_page_indicator/ink_page_indicator_data.dart';
+
+import 'ink_page_indicator_data.dart';
 
 class InkPageIndicatorPainter
     extends PageIndicatorPainter<InkPageIndicatorData, InkPageIndicator, InkPageIndicatorState> {
@@ -13,15 +14,28 @@ class InkPageIndicatorPainter
   ) : super(parent, data);
 
   InkStyle get style => widget.style;
-  Color get inkColor => data.inkColor ?? inActiveColor;
+  Color get inkColor => data.inkColor ?? inactiveColor;
 
-  bool get animateLastPageDot => style == InkStyle.modern || style == InkStyle.simple;
+  bool get animateLastPageDot => style == InkStyle.simple || style == InkStyle.original;
 
+  @override
   double get activeDotProgress {
     switch (style) {
-      case InkStyle.modern:
       case InkStyle.simple:
+      case InkStyle.original:
         return fInRange(0.4, 0.8, progress);
+      default:
+        return progress;
+    }
+  }
+
+  @override
+  double get inactiveDotProgress {
+    switch (style) {
+      case InkStyle.original:
+        return fInRange(0.0, 0.4, this.progress);
+      case InkStyle.simple:
+        return fInRange(0.0, 0.5, this.progress);
       default:
         return progress;
     }
@@ -31,18 +45,9 @@ class InkPageIndicatorPainter
   void paint(Canvas canvas, Size size) {
     super.paint(canvas, size);
 
-    drawStyle();
     drawInActiveIndicators();
+    drawInkStyle();
     drawActiveDot(activeDotProgress);
-  }
-
-  @protected
-  void drawStyle() {
-    if (style == InkStyle.modern) {
-      drawModernStyle();
-    } else if (style == InkStyle.simple) {
-      drawSimpleStyle();
-    }
   }
 
   @protected
@@ -50,23 +55,62 @@ class InkPageIndicatorPainter
   void drawInActiveIndicators() {
     final paint = Paint()
       ..isAntiAlias = true
-      ..color = inActiveColor;
+      ..color = inactiveColor;
 
     for (var i = 0; i < dots.length; i++) {
       final dx = dots[i];
       final isCurrent = i == currentPage;
       final isNext = i == nextPage;
 
-      IndicatorShape shape;
+      IndicatorShape shape = this.shape;
       if (isCurrent || isNext) {
-        shape = this.shape.lerpTo(activeShape, isNext ? progress : 1 - progress);
-      } else {
-        shape = this.shape;
+        // Lerp the next shape to the active shape and the current shape
+        // from the active shape to the inactive shape.
+        shape = this.shape.lerpTo(
+              activeShape,
+              isNext ? inactiveDotProgress : 1 - inactiveDotProgress,
+            );
       }
 
-      final f = !isCurrent || !animateLastPageDot ? 1.0 : fInRange(0.9, 1.0, progress);
+      final animateLastDotInAgain = isCurrent && animateLastPageDot;
+      if (animateLastDotInAgain) {
+        shape = shape.scale(fInRange(0.9, 1.0, progress));
+      }
 
-      drawIndicator(dx, paint, shape.scale(f));
+      if (style == InkStyle.transition && (isCurrent || isNext)) {
+        if (progress == 0.0 || currentPage == nextPage) {
+          paint.color = isCurrent ? activeColor : inactiveColor;
+        } else {
+          paint.color = Color.lerp(
+            isCurrent ? activeColor : inactiveColor,
+            isCurrent ? inactiveColor : activeColor,
+            progress,
+          );
+        }
+      } else if (style == InkStyle.original && isNext) {
+        paint.color = getNextActiveInkTransitionColor();
+      } else {
+        paint.color = inactiveColor;
+      }
+
+      drawIndicator(dx, paint, shape);
+    }
+  }
+
+  @protected
+  @override
+  void drawActiveDot(double p) {
+    if (style == InkStyle.transition) return;
+
+    super.drawActiveDot(p);
+  }
+
+  @protected
+  void drawInkStyle() {
+    if (style == InkStyle.original) {
+      drawOriginalStyle();
+    } else if (style == InkStyle.simple) {
+      drawSimpleStyle();
     }
   }
 
@@ -76,20 +120,20 @@ class InkPageIndicatorPainter
       ..color = inkColor
       ..isAntiAlias = true;
 
-    final startProgress = fInRange(0.0, 0.5, progress);
+    final startProgress = inactiveDotProgress;
     final endProgress = fInRange(0.8, 1.0, progress);
 
     final start = lerpDouble(currentDot, nextDot, startProgress);
     final end = lerpDouble(currentDot, nextDot, endProgress);
-    final shape = this.shape.lerpTo(activeShape, progress);
+    final shape = activeShape;
     final rrect = getRRectFromEndPoints(start, end, shape);
 
     canvas.drawRRect(rrect, paint);
   }
 
   @protected
-  void drawModernStyle() {
-    final inkProgress = fInRange(0.0, 0.4, progress);
+  void drawOriginalStyle() {
+    final inkProgress = inactiveDotProgress;
     if (inkProgress == 0.0) return;
 
     final paint = Paint()
@@ -107,14 +151,6 @@ class InkPageIndicatorPainter
   }
 
   @protected
-  void drawEndTransition(Paint paint, double transitionProgress) {
-    final start = lerpDouble(currentDot, nextDot, transitionProgress);
-    final rrect = getRRectFromEndPoints(start, nextDot, activeShape);
-
-    canvas.drawRRect(rrect, paint);
-  }
-
-  @protected
   void drawInkInTransition(Paint paint, double inkProgress) {
     final dy = center.dy;
     final dx = lerpDouble(currentDot, nextDot, 0.5);
@@ -124,7 +160,7 @@ class InkPageIndicatorPainter
       ..moveTo(origin, dy)
       ..lineTo(lerpDouble(origin, dx, inkProgress), dy);
 
-    void drawInkPath(Path path) {
+    void drawInkPath(Path path, IndicatorShape shape) {
       drawPressurePath(path, paint, [
         PressureStop(stop: 0.0, thickness: shape.height),
         PressureStop(stop: 1.0, thickness: shape.height * inkProgress),
@@ -134,7 +170,27 @@ class InkPageIndicatorPainter
     final fromInk = createInkPath(currentDot);
     final toInk = createInkPath(nextDot);
 
-    drawInkPath(fromInk);
-    drawInkPath(toInk);
+    drawInkPath(fromInk, activeShape);
+
+    paint.color = getNextActiveInkTransitionColor();
+
+    drawInkPath(toInk, shape);
+  }
+
+  // Transition between the inactive item color and the
+  // ink color.
+  @protected
+  Color getNextActiveInkTransitionColor() => Color.lerp(
+        inactiveColor,
+        inkColor,
+        fInRange(0.0, 0.5, inactiveDotProgress),
+      );
+
+  @protected
+  void drawEndTransition(Paint paint, double transitionProgress) {
+    final start = lerpDouble(currentDot, nextDot, transitionProgress);
+    final rrect = getRRectFromEndPoints(start, nextDot, activeShape);
+
+    canvas.drawRRect(rrect, paint);
   }
 }
