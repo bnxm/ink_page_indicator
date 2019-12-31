@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
       result.add(
         SizedBox.expand(
           child: Container(
-            color: i.isOdd ? Colors.grey.shade100 : Colors.grey.shade100,
+            color: i.isOdd ? Colors.white : Colors.white,
           ),
         ),
       );
