@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:meta/meta.dart';
 import 'package:ink_page_indicator/src/src.dart';
 
 abstract class PageIndicator extends ImplicitAnimation {
-  final int itemCount;
   final PageIndicatorController controller;
   final double padding;
   final Color activeColor;
@@ -19,7 +19,6 @@ abstract class PageIndicator extends ImplicitAnimation {
     Key key,
     @required IndicatorShape shape,
     @required IndicatorShape activeShape,
-    @required this.itemCount,
     @required this.padding,
     @required this.controller,
     @required this.activeColor,
@@ -29,7 +28,6 @@ abstract class PageIndicator extends ImplicitAnimation {
         activeShape = activeShape ?? shape,
         assert(controller != null),
         assert(padding != null),
-        assert(itemCount != null && itemCount >= 1),
         super(
           key,
           const Duration(milliseconds: 400),
@@ -44,10 +42,10 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
   PageIndicatorController get pageController => widget.controller;
 
   @nonVirtual
-  int get itemCount => widget.itemCount;
+  int get pageCount => pageController.pageCount;
 
   @nonVirtual
-  int get maxPages => itemCount - 1;
+  int get maxPages => max(pageCount - 1, 1);
 
   double _p = 0;
   double get page => _p;
@@ -79,9 +77,21 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
       pageController
         ..registerIndicator(this)
         ..addListener(_listener);
-    } else if (itemCount >= 2) {
+
+      // Call the listener once the indicator is laid out to
+      // recompute the page count.
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _listener(),
+      );
+    } else if (pageCount >= 2) {
       _nextPage = 1;
     }
+  }
+
+  @override
+  void didUpdateWidget(P oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    ensureCurrentPageIsInRange();
   }
 
   void _listener() {
@@ -92,6 +102,7 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
 
     _findNextPageIndices();
     _calculateScrollProgress();
+
     setState(() {});
   }
 
@@ -104,9 +115,7 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
   void _findNextPageIndices() {
     if (inAnimation) return;
 
-    if (_currentPage >= itemCount) {
-      _currentPage = itemCount - 1;
-    }
+    ensureCurrentPageIsInRange();
 
     // Save reached page as the new anchor
     if (page.remainder(1) == 0.0 || (page - _currentPage).abs() >= 1.0) {
@@ -128,6 +137,13 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
     _nextPage = page;
     await future;
     inAnimation = false;
+  }
+
+  @protected
+  void ensureCurrentPageIsInRange() {
+    if (_currentPage >= maxPages) {
+      _currentPage = maxPages;
+    }
   }
 
   @protected

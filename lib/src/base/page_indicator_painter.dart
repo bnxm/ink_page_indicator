@@ -32,7 +32,7 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
 
   int get currentPage => parent.currentPage;
   int get nextPage => parent.nextPage;
-  int get itemCount => parent.itemCount;
+  int get itemCount => parent.pageCount;
 
   double get gap => data.gap;
 

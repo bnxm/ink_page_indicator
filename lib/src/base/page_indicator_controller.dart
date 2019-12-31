@@ -16,7 +16,16 @@ class PageIndicatorController extends PageController {
           keepPage: keepPage,
           viewportFraction: viewportFraction,
         );
-        
+
+  double get viewportSize => position?.viewportDimension ?? 0;
+
+  int get pageCount {
+    if (viewportSize == 0) return 0;
+
+    // A page is an increment of the viewport size
+    return ((viewportSize + position.maxScrollExtent) / viewportSize).floor();
+  }
+
   // Allow multiple Indicators to listen on the same
   // controller.
   final List<PageIndicatorState> _indicators = [];

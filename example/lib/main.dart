@@ -63,7 +63,6 @@ class _HomeState extends State<Home> {
             child: InkPageIndicator(
               gap: 32,
               padding: 16,
-              itemCount: 3,
               shape: shape,
               activeShape: activeShape,
               inActiveColor: Colors.grey.shade500,
@@ -108,7 +107,6 @@ class _HomeState extends State<Home> {
                 ),
                 child: LeapingPageIndicator(
                   controller: controller,
-                  itemCount: 3,
                   gap: 32,
                   padding: 16,
                   shape: shape,

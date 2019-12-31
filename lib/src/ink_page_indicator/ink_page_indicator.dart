@@ -7,7 +7,6 @@ import 'ink_page_indicator_painter.dart';
 
 /// The style of an [InkPageIndicator].
 enum InkStyle {
-  
   original,
   simple,
   translate,
@@ -19,7 +18,6 @@ class InkPageIndicator extends PageIndicator {
   final InkStyle style;
   InkPageIndicator({
     Key key,
-    @required int itemCount,
     @required PageIndicatorController controller,
     this.style = InkStyle.simple,
     this.inkColor,
@@ -37,7 +35,6 @@ class InkPageIndicator extends PageIndicator {
           key: key,
           shape: shape,
           activeShape: activeShape,
-          itemCount: itemCount,
           controller: controller,
           activeColor: activeColor,
           inActiveColor: inActiveColor,
@@ -62,6 +59,8 @@ class InkPageIndicatorState extends PageIndicatorState<InkPageIndicator, InkPage
 
   @override
   Widget builder(BuildContext context, InkPageIndicatorData data) {
+    if (pageCount == 0) return SizedBox(height: widget.shape.height);
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: widget.padding),
       child: SizedBox(

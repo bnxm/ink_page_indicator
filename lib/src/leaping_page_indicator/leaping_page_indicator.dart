@@ -15,7 +15,6 @@ class LeapingPageIndicator extends PageIndicator {
   final LeapingStyle style;
   LeapingPageIndicator({
     Key key,
-    @required int itemCount,
     @required PageIndicatorController controller,
     double radii,
     this.style = LeapingStyle.normal,
@@ -34,7 +33,6 @@ class LeapingPageIndicator extends PageIndicator {
           key: key,
           shape: shape,
           activeShape: activeShape,
-          itemCount: itemCount,
           controller: controller,
           activeColor: activeColor,
           inActiveColor: inActiveColor,
@@ -59,6 +57,8 @@ class LeapingPageIndicatorState extends PageIndicatorState<LeapingPageIndicator,
 
   @override
   Widget builder(BuildContext context, LeapingIndicatorData data) {
+    if (pageCount == 0) return SizedBox(height: widget.shape.height);
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: widget.padding),
       child: SizedBox(
