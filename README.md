@@ -42,7 +42,7 @@ PageView(
 
 ### Ink Page Indicator
 
-The `InkPageIndicator` comes with four different styles that you can define using the `style` parameter.
+The `InkPageIndicator` comes with four different styles that you can define using the `style` parameter:
 
 <table>
   <tr>
@@ -92,7 +92,7 @@ InkPageIndicator(
 
 ### LeapingPageIndicator
 
-A `PageIndicator` that jumps between the each item.
+A `PageIndicator` that jumps between the each of its items.
 
 <img width="356px" alt="InkStyle.normal" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/leap_demo.gif"/>
 
@@ -114,7 +114,7 @@ LeapingPageIndicator(
 
 ### Shapes
 
-You can specify different `IndicatorShape`s for inactive and active indicators and the `PageIndicator` will interpolate between them as exemplied below.
+You can specify different `IndicatorShapes` for inactive and active indicators and the `PageIndicator` will interpolate between them as exemplified below.
 
 <img width="356px" alt="An InkPageIndicator with different shapes using InkStyle.transition" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/shape_demo.gif"/>
 
