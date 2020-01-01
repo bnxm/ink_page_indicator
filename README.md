@@ -1,6 +1,6 @@
 # Ink Page Indicator
 
-A package that offers various page indicators inlcuding a flutter implementation of the Ink Page Indicator.
+A package that offers various page indicators inlcuding a flutter implementation of the Ink Page Indicator. See below for more examples.
 
 <p style="text-align:center">
     <img width="356px" alt="Ink Page Indicator" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/ink_demo.gif"/>
@@ -20,9 +20,9 @@ flutter packages get
 
 ## Usage
 
-As of now there are two `PageIndicator`s: `InkPageIndicator` and `LeapingPageIndicator`. You can see examples of them below.
+As of now there are two `PageIndicators`: `InkPageIndicator` and `LeapingPageIndicator`. You can see examples of them below.
 
-Every `PageIndicator` requires an instance of `PageIndicatorController` which is a `PageController` that you can supply to your `PageView`. This allows the `PageIndicator` to calculate the page count and handle page animations properly.
+Every `PageIndicator` requires an instance of `PageIndicatorController` which is a `PageController` that you should assign to your `PageView`. This allows the `PageIndicator` to calculate the page count and handle page animations properly.
 
 ```dart
 PageIndicatorController controller;
@@ -61,7 +61,7 @@ The `InkPageIndicator` comes with four different styles that you can define usin
   </tr>
   <tr>
     <td width="25%">
-      <p text-align="center"> InkStyle.normal </p>
+      InkStyle.normal
     </td>
     <td width="25%">
       InkStyle.simple
@@ -92,6 +92,8 @@ InkPageIndicator(
 
 ### LeapingPageIndicator
 
+A `PageIndicator` that jumps between the each item.
+
 <img width="356px" alt="InkStyle.normal" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/leap_demo.gif"/>
 
 #### Example
@@ -114,7 +116,7 @@ LeapingPageIndicator(
 
 You can specify different `IndicatorShape`s for inactive and active indicators and the `PageIndicator` will interpolate between them as exemplied below.
 
-<img width="356px" alt="InkStyle.normal" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/shape_demo.gif"/>
+<img width="356px" alt="An InkPageIndicator with different shapes using InkStyle.transition" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/shape_demo.gif"/>
 
 ```dart
 final shape = IndicatorShape(
@@ -134,6 +136,7 @@ InkPageIndicator(
     gap: 32,
     padding: 16,
     shape: shape,
+    style: InkStyle.transition,
     activeShape: activeShape,
     inactiveColor: Colors.grey.shade400,
     activeColor: Colors.grey.shade700,
