@@ -7,7 +7,7 @@ import 'ink_page_indicator_painter.dart';
 
 /// The style of an [InkPageIndicator].
 enum InkStyle {
-  original,
+  normal,
   simple,
   translate,
   transition,
@@ -24,12 +24,12 @@ class InkPageIndicator extends PageIndicator {
     IndicatorShape shape,
     IndicatorShape activeShape,
     Color activeColor = Colors.black,
-    Color inActiveColor = Colors.grey,
+    Color inactiveColor = Colors.grey,
     double gap = 12.0,
     double padding = 8.0,
   })  : assert(style != null),
         assert(activeColor != null),
-        assert(inActiveColor != null),
+        assert(inactiveColor != null),
         assert(gap != null && gap >= 0.0),
         super(
           key: key,
@@ -37,7 +37,7 @@ class InkPageIndicator extends PageIndicator {
           activeShape: activeShape,
           controller: controller,
           activeColor: activeColor,
-          inActiveColor: inActiveColor,
+          inactiveColor: inactiveColor,
           gap: gap,
           padding: padding,
         );
@@ -50,7 +50,7 @@ class InkPageIndicatorState extends PageIndicatorState<InkPageIndicator, InkPage
   @override
   InkPageIndicatorData get newValue => InkPageIndicatorData(
         activeColor: widget.activeColor,
-        inactiveColor: widget.inActiveColor,
+        inactiveColor: widget.inactiveColor,
         inkColor: widget.inkColor,
         gap: widget.gap,
         shape: widget.shape,

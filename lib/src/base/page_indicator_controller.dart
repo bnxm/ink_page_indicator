@@ -23,7 +23,7 @@ class PageIndicatorController extends PageController {
     if (viewportSize == 0) return 0;
 
     // A page is an increment of the viewport size
-    return ((viewportSize + position.maxScrollExtent) / viewportSize).floor();
+    return ((viewportSize + position.maxScrollExtent) / viewportSize).ceil();
   }
 
   // Allow multiple Indicators to listen on the same

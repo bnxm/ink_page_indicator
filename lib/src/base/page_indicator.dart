@@ -11,7 +11,7 @@ abstract class PageIndicator extends ImplicitAnimation {
   final PageIndicatorController controller;
   final double padding;
   final Color activeColor;
-  final Color inActiveColor;
+  final Color inactiveColor;
   final double gap;
   final IndicatorShape shape;
   final IndicatorShape activeShape;
@@ -22,7 +22,7 @@ abstract class PageIndicator extends ImplicitAnimation {
     @required this.padding,
     @required this.controller,
     @required this.activeColor,
-    @required this.inActiveColor,
+    @required this.inactiveColor,
     @required this.gap,
   })  : shape = shape ?? IndicatorShape.circle(8),
         activeShape = activeShape ?? shape,

@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
               padding: 16,
               shape: shape,
               activeShape: activeShape,
-              inActiveColor: Colors.grey.shade500,
+              inactiveColor: Colors.grey.shade500,
               activeColor: Colors.grey.shade700,
               inkColor: Colors.grey.shade400,
               controller: controller,
@@ -81,10 +81,17 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final children = _createChildren(3);
 
-    shape = IndicatorShape.circle(13);
-    activeShape = shape.copyWith();
+    shape = IndicatorShape(
+      width: 12,
+      height: 20,
+      borderRadius: BorderRadius.circular(0),
+    );
 
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    activeShape = IndicatorShape(
+      width: 12,
+      height: 40,
+      borderRadius: BorderRadius.circular(0),
+    );
 
     return Stack(
       children: <Widget>[
@@ -94,7 +101,7 @@ class _HomeState extends State<Home> {
         ),
         Column(
           children: <Widget>[
-            buildInkPageIndicator(InkStyle.original),
+            buildInkPageIndicator(InkStyle.normal),
             buildInkPageIndicator(InkStyle.simple),
             buildInkPageIndicator(InkStyle.translate),
             buildInkPageIndicator(InkStyle.transition),
@@ -111,26 +118,13 @@ class _HomeState extends State<Home> {
                   padding: 16,
                   shape: shape,
                   activeShape: activeShape,
-                  inActiveColor: Colors.grey.shade400,
+                  inactiveColor: Colors.grey.shade400,
                   activeColor: Colors.grey.shade700,
                 ),
               ),
             )
           ],
         ),
-        /* Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: FloatingActionButton(
-              onPressed: () => controller.animateToPage(
-                controller.page != children.length - 1 ? children.length - 1 : 0,
-                duration: Duration(milliseconds: 800),
-                curve: Curves.ease,
-              ),
-            ),
-          ),
-        ), */
       ],
     );
   }

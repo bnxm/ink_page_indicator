@@ -16,13 +16,13 @@ class InkPageIndicatorPainter
   InkStyle get style => widget.style;
   Color get inkColor => data.inkColor ?? inactiveColor;
 
-  bool get animateLastPageDot => style == InkStyle.simple || style == InkStyle.original;
+  bool get animateLastPageDot => style == InkStyle.simple || style == InkStyle.normal;
 
   @override
   double get activeDotProgress {
     switch (style) {
       case InkStyle.simple:
-      case InkStyle.original:
+      case InkStyle.normal:
         return fInRange(0.4, 0.8, progress);
       default:
         return progress;
@@ -32,7 +32,7 @@ class InkPageIndicatorPainter
   @override
   double get inactiveDotProgress {
     switch (style) {
-      case InkStyle.original:
+      case InkStyle.normal:
         return fInRange(0.0, 0.4, this.progress);
       case InkStyle.simple:
         return fInRange(0.0, 0.5, this.progress);
@@ -87,7 +87,7 @@ class InkPageIndicatorPainter
             progress,
           );
         }
-      } else if (style == InkStyle.original && isNext) {
+      } else if (style == InkStyle.normal && isNext) {
         paint.color = getNextActiveInkTransitionColor();
       } else {
         paint.color = inactiveColor;
@@ -107,7 +107,7 @@ class InkPageIndicatorPainter
 
   @protected
   void drawInkStyle() {
-    if (style == InkStyle.original) {
+    if (style == InkStyle.normal) {
       drawOriginalStyle();
     } else if (style == InkStyle.simple) {
       drawSimpleStyle();
