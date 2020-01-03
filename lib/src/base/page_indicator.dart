@@ -106,11 +106,11 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
     setState(() {});
   }
 
-  void _debugPrint() {
+  /* void _debugPrint() {
     print(
       '${page.toStringAsFixed(2)}, $currentPage, $nextPage, ${progress.toStringAsFixed(2)}, $dir, $inAnimation',
     );
-  }
+  } */
 
   void _findNextPageIndices() {
     if (inAnimation) return;
