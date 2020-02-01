@@ -33,7 +33,11 @@ class PageIndicatorController extends PageController {
   void Function(int page, Duration duration) onAnimateToPage;
 
   @override
-  Future<void> animateToPage(int page, {Duration duration, Curve curve}) async {
+  Future<void> animateToPage(
+    int page, {
+    Duration duration = const Duration(milliseconds: 400),
+    Curve curve = Curves.linear,
+  }) async {
     final future = super.animateToPage(page, duration: duration, curve: curve);
 
     for (final indicator in _indicators) {
