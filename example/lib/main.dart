@@ -42,13 +42,7 @@ class _HomeState extends State<Home> {
   List<Widget> _createChildren(int count) {
     final List<Widget> result = [];
     for (var i = 0; i < count; i++) {
-      result.add(
-        SizedBox.expand(
-          child: Container(
-            color: i.isOdd ? Colors.white : Colors.white,
-          ),
-        ),
-      );
+      result.add(SizedBox.expand());
     }
     return result;
   }
@@ -82,28 +76,24 @@ class _HomeState extends State<Home> {
     final children = _createChildren(3);
 
     shape = IndicatorShape(
-      width: 12,
-      height: 20,
-      borderRadius: BorderRadius.circular(0),
+      width: 4,
+      height: 15,
+      borderRadius: BorderRadius.circular(1),
     );
 
     activeShape = IndicatorShape(
       width: 12,
-      height: 40,
-      borderRadius: BorderRadius.circular(0),
+      height: 20,
+      borderRadius: BorderRadius.circular(2),
     );
 
     return Stack(
       children: <Widget>[
-        PageView(
-          controller: controller,
-          children: children,
-        ),
         Column(
           children: <Widget>[
-            buildInkPageIndicator(InkStyle.normal),
+            /* buildInkPageIndicator(InkStyle.normal),
             buildInkPageIndicator(InkStyle.simple),
-            buildInkPageIndicator(InkStyle.translate),
+            buildInkPageIndicator(InkStyle.translate), */
             buildInkPageIndicator(InkStyle.transition),
             Expanded(
               child: GestureDetector(
@@ -124,6 +114,10 @@ class _HomeState extends State<Home> {
               ),
             )
           ],
+        ),
+        PageView(
+          controller: controller,
+          children: children,
         ),
       ],
     );

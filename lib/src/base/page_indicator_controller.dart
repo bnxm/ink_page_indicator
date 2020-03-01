@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:ink_page_indicator/src/base/base.dart';
 
 /// A PageController for a PageView that uses a [PageIndicator].
@@ -17,7 +18,7 @@ class PageIndicatorController extends PageController {
           viewportFraction: viewportFraction,
         );
 
-  double get viewportSize => position?.viewportDimension ?? 0;
+  double get viewportSize => hasClients ? position?.viewportDimension ?? 0 : 0;
 
   int get pageCount {
     if (viewportSize == 0) return 0;

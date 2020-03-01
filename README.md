@@ -11,7 +11,7 @@ A package that offers various page indicators inlcuding a Flutter implementation
 Add it to your `pubspec.yaml` file:
 ```yaml
 dependencies:
-  ink_page_indicator: ^0.1.1
+  ink_page_indicator: ^0.1.2
 ```
 Install packages from the command line
 ```
@@ -143,3 +143,7 @@ InkPageIndicator(
   ),
 )
 ```
+
+### Contribution
+
+If you like this package, consider giving it a star on [GitHub](https://github.com/BendixMa/ink_page_indicator) and a like on [pub.dev](https://pub.dev/packages/ink_page_indicator).
