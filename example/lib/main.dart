@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 }
 
 class Home extends StatefulWidget {
-  Home({Key key}) : super(key: key);
+  const Home({Key key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
   List<Widget> _createChildren(int count) {
     final List<Widget> result = [];
     for (var i = 0; i < count; i++) {
-      result.add(SizedBox.expand());
+      result.add(const SizedBox.expand());
     }
     return result;
   }
@@ -74,49 +74,41 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final children = _createChildren(3);
 
-    shape = IndicatorShape(
-      width: 4,
-      height: 15,
-      borderRadius: BorderRadius.circular(1),
-    );
+    shape = IndicatorShape.circle(10);
 
-    activeShape = IndicatorShape(
-      width: 12,
-      height: 20,
-      borderRadius: BorderRadius.circular(2),
-    );
+    activeShape = IndicatorShape.circle(10);
 
     return Stack(
       children: <Widget>[
         Column(
           children: <Widget>[
-            /* buildInkPageIndicator(InkStyle.normal),
-            buildInkPageIndicator(InkStyle.simple),
-            buildInkPageIndicator(InkStyle.translate), */
-            buildInkPageIndicator(InkStyle.transition),
+            buildInkPageIndicator(InkStyle.normal),
+            /* buildInkPageIndicator(InkStyle.simple),
+            buildInkPageIndicator(InkStyle.translate),
+            buildInkPageIndicator(InkStyle.transition), */
             Expanded(
-              child: GestureDetector(
-                onTap: () => controller.animateToPage(
-                  controller.page != children.length - 1 ? children.length - 1 : 0,
-                  duration: Duration(milliseconds: 800),
-                  curve: Curves.ease,
-                ),
-                child: LeapingPageIndicator(
-                  controller: controller,
-                  gap: 32,
-                  padding: 16,
-                  shape: shape,
-                  activeShape: activeShape,
-                  inactiveColor: Colors.grey.shade400,
-                  activeColor: Colors.grey.shade700,
-                ),
+              child: LeapingPageIndicator(
+                controller: controller,
+                gap: 32,
+                padding: 16,
+                shape: shape,
+                activeShape: activeShape,
+                inactiveColor: Colors.grey.shade400,
+                activeColor: Colors.grey.shade700,
               ),
             )
           ],
         ),
-        PageView(
-          controller: controller,
-          children: children,
+        InkWell(
+          onTap: () => controller.animateToPage(
+            controller.page != children.length - 1 ? children.length - 1 : 0,
+            duration: const Duration(milliseconds: 800),
+            curve: Curves.ease,
+          ),
+          child: PageView(
+            controller: controller,
+            children: children,
+          ),
         ),
       ],
     );

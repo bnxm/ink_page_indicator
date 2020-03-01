@@ -3,7 +3,7 @@
 A package that offers various page indicators inlcuding a Flutter implementation of the Ink Page Indicator. See below for more examples.
 
 <p style="text-align:center">
-    <img width="356px" alt="Ink Page Indicator" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/ink_demo.gif"/>
+    <img width="356px" alt="Ink Page Indicator" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/ink_demo_slow.gif"/>
 </p>
 
 ## Installing
