@@ -49,10 +49,12 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
 
   double _p = 0;
   double get page => _p;
+  // ignore: avoid_setters_without_getters
   set _page(double value) => _p = value.clamp(0.0, maxPages.toDouble());
 
   int _np = 0;
   int get nextPage => _np;
+  // ignore: avoid_setters_without_getters
   set _nextPage(int value) => _np = value.clamp(0, maxPages);
 
   int _currentPage = 0;
@@ -130,7 +132,7 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
     _progress = ((page - currentPage) / (nextPage - currentPage)).abs().clamp(0.0, 1.0);
   }
 
-  void onAnimateToPage(int page, Future future) async {
+  Future<void> onAnimateToPage(int page, Future future) async {
     inAnimation = true;
     _currentPage = this.page.floor();
     _progress = 0.0;

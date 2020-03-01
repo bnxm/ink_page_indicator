@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -202,6 +202,7 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
       final metrics = path.computeMetrics().first;
       final length = metrics.length;
       return metrics.getTangentForOffset(length * fraction).position;
+      // ignore: avoid_catching_errors
     } on Error {
       return Offset.zero;
     }

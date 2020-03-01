@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ink_page_indicator/ink_page_indicator.dart';
 
 void main() => runApp(MyApp());

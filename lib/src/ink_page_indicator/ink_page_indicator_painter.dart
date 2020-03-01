@@ -32,9 +32,9 @@ class InkPageIndicatorPainter
   double get inactiveDotProgress {
     switch (style) {
       case InkStyle.normal:
-        return fInRange(0.0, 0.4, this.progress);
+        return fInRange(0.0, 0.4, progress);
       case InkStyle.simple:
-        return fInRange(0.0, 0.5, this.progress);
+        return fInRange(0.0, 0.5, progress);
       default:
         return progress;
     }
