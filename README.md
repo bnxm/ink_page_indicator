@@ -3,7 +3,7 @@
 A package that offers various page indicators inlcuding a Flutter implementation of the Ink Page Indicator. See below for more examples.
 
 <p style="text-align:center">
-    <img width="356px" alt="Ink Page Indicator" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/ink_demo_slow.gif"/>
+    <img width="356px" alt="Ink Page Indicator" src="https://raw.githubusercontent.com/bnxm/ink_page_indicator/master/assets/ink_demo_slow.gif"/>
 </p>
 
 ## Installing
@@ -47,16 +47,16 @@ The `InkPageIndicator` comes with four different styles that you can define usin
 <table>
   <tr>
     <td>
-      <img width="100%" alt="InkStyle.normal" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/ink_demo.gif"/>
+      <img width="100%" alt="InkStyle.normal" src="https://raw.githubusercontent.com/bnxm/ink_page_indicator/master/assets/ink_demo.gif"/>
     </td>
     <td width="25%">
-      <img width="100%" alt="InkStyle.simple" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/simple_demo.gif"/>
+      <img width="100%" alt="InkStyle.simple" src="https://raw.githubusercontent.com/bnxm/ink_page_indicator/master/assets/simple_demo.gif"/>
     </td>
     <td width="25%">
-    <img width="100%" alt="InkStyle.transition" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/translate_demo.gif"/>
+    <img width="100%" alt="InkStyle.transition" src="https://raw.githubusercontent.com/bnxm/ink_page_indicator/master/assets/translate_demo.gif"/>
     </td>
     <td width="25%">
-          <img width="100%" alt="InkStyle.translate" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/transition_demo.gif"/>
+          <img width="100%" alt="InkStyle.translate" src="https://raw.githubusercontent.com/bnxm/ink_page_indicator/master/assets/transition_demo.gif"/>
     </td>
   </tr>
   <tr>
@@ -94,7 +94,7 @@ InkPageIndicator(
 
 A `PageIndicator` that jumps between the each of its items.
 
-<img width="356px" alt="InkStyle.normal" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/leap_demo.gif"/>
+<img width="356px" alt="InkStyle.normal" src="https://raw.githubusercontent.com/bnxm/ink_page_indicator/master/assets/leap_demo.gif"/>
 
 #### Example
 
@@ -116,7 +116,7 @@ LeapingPageIndicator(
 
 You can specify different `IndicatorShapes` for inactive and active indicators and the `PageIndicator` will interpolate between them as exemplified below.
 
-<img width="356px" alt="An InkPageIndicator with different shapes using InkStyle.transition" src="https://raw.githubusercontent.com/BendixMa/ink_page_indicator/master/assets/shape_demo.gif"/>
+<img width="356px" alt="An InkPageIndicator with different shapes using InkStyle.transition" src="https://raw.githubusercontent.com/bnxm/ink_page_indicator/master/assets/shape_demo.gif"/>
 
 ```dart
 final shape = IndicatorShape(
@@ -146,4 +146,4 @@ InkPageIndicator(
 
 ### Contribution
 
-If you like this package, consider giving it a star on [GitHub](https://github.com/BendixMa/ink_page_indicator) and a like on [pub.dev](https://pub.dev/packages/ink_page_indicator).
+If you like this package, consider giving it a star on [GitHub](https://github.com/bnxm/ink_page_indicator) and a like on [pub.dev](https://pub.dev/packages/ink_page_indicator).
