@@ -11,7 +11,7 @@ A package that offers various page indicators inlcuding a Flutter implementation
 Add it to your `pubspec.yaml` file:
 ```yaml
 dependencies:
-  ink_page_indicator: ^0.1.3
+  ink_page_indicator: ^0.1.4
 ```
 Install packages from the command line
 ```
