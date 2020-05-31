@@ -6,13 +6,10 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Page Indicators',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        /* appBar: AppBar(
-          title: Text('Page Indicators'),
-        ), */
         body: Home(),
       ),
     );
@@ -75,7 +72,6 @@ class _HomeState extends State<Home> {
     final children = _createChildren(3);
 
     shape = IndicatorShape.circle(10);
-
     activeShape = IndicatorShape.circle(10);
 
     return Stack(
@@ -83,9 +79,9 @@ class _HomeState extends State<Home> {
         Column(
           children: <Widget>[
             buildInkPageIndicator(InkStyle.normal),
-            /* buildInkPageIndicator(InkStyle.simple),
+            buildInkPageIndicator(InkStyle.simple),
             buildInkPageIndicator(InkStyle.translate),
-            buildInkPageIndicator(InkStyle.transition), */
+            buildInkPageIndicator(InkStyle.transition),
             Expanded(
               child: LeapingPageIndicator(
                 controller: controller,

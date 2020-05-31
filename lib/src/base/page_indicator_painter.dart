@@ -41,7 +41,7 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
 
   final List<double> dots = [];
   double get currentDot => dots[currentPage];
-  double get nextDot => dots[nextPage];
+  double get nextDot => nextPage < dots.length ? dots[nextPage] : currentDot;
 
   double get activeDotProgress => progress;
   double get inactiveDotProgress => progress;

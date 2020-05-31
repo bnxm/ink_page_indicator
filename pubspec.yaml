@@ -1,6 +1,6 @@
 name: ink_page_indicator
 description: Page indicators for Flutter including an implementation  of the InkPageIndicator.
-version: 0.1.2
+version: 0.1.3
 homepage: https://github.com/bnxm/ink_page_indicator
 
 environment:

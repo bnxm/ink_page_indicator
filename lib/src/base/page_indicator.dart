@@ -25,7 +25,7 @@ abstract class PageIndicator extends ImplicitAnimation {
     @required this.inactiveColor,
     @required this.gap,
   })  : shape = shape ?? IndicatorShape.circle(8),
-        activeShape = activeShape ?? shape,
+        activeShape = activeShape ?? shape ?? IndicatorShape.circle(8),
         assert(controller != null),
         assert(padding != null),
         super(
@@ -45,7 +45,7 @@ abstract class PageIndicatorState<P extends PageIndicator, D extends IndicatorDa
   int get pageCount => pageController.pageCount;
 
   @nonVirtual
-  int get maxPages => max(pageCount - 1, 1);
+  int get maxPages => max(pageCount - 1, 0);
 
   double _p = 0;
   double get page => _p;

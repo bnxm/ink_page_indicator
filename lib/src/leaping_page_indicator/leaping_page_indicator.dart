@@ -57,6 +57,7 @@ class LeapingPageIndicatorState extends PageIndicatorState<LeapingPageIndicator,
 
   @override
   Widget builder(BuildContext context, LeapingIndicatorData data) {
+    print(pageCount);
     if (pageCount == 0) return SizedBox(height: widget.shape.height);
 
     return Padding(
