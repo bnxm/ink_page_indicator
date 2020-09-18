@@ -144,7 +144,3 @@ InkPageIndicator(
   ),
 )
 ```
-
-### Contribution
-
-If you like this package, consider giving it a star on [GitHub](https://github.com/bnxm/ink_page_indicator) and a like on [pub.dev](https://pub.dev/packages/ink_page_indicator).
