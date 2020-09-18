@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:ink_page_indicator/src/src.dart';
 
+// ignore_for_file: public_member_api_docs
+
 abstract class IndicatorData {
   final Color activeColor;
   final Color inactiveColor;
@@ -15,6 +17,6 @@ abstract class IndicatorData {
     @required this.shape,
     @required this.activeShape,
   });
-  
+
   IndicatorData lerpTo(IndicatorData b, double t);
 }

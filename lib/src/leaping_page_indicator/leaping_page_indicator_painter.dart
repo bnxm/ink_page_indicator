@@ -6,8 +6,10 @@ import 'package:ink_page_indicator/src/src.dart';
 import 'leaping_page_indicator.dart';
 import 'leaping_page_indicator_data.dart';
 
-class LeapingPageIndicatorPainter
-    extends PageIndicatorPainter<LeapingIndicatorData, LeapingPageIndicator, LeapingPageIndicatorState> {
+// ignore_for_file: public_member_api_docs
+
+class LeapingPageIndicatorPainter extends PageIndicatorPainter<
+    LeapingIndicatorData, LeapingPageIndicator, LeapingPageIndicatorState> {
   LeapingPageIndicatorPainter(
     LeapingPageIndicatorState parent,
     LeapingIndicatorData data,

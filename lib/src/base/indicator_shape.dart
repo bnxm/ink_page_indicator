@@ -3,17 +3,22 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+// ignore_for_file: public_member_api_docs
+
 /// A shape that can be used to customize the appearance
 /// of the indicators in a [PageIndicator].
 class IndicatorShape {
   final double width;
   final double height;
   final BorderRadius borderRadius;
+
+  /// Creates a shape that can be used to customize the appearance
+  /// of the indicators in a [PageIndicator].
   IndicatorShape({
     @required this.width,
     @required this.height,
     BorderRadius borderRadius,
-  })  : borderRadius = borderRadius ??
+  }) : borderRadius = borderRadius ??
             BorderRadius.circular(
               math.min(width, height),
             );
@@ -58,16 +63,17 @@ class IndicatorShape {
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-  
+
     return o is IndicatorShape &&
-      o.width == width &&
-      o.height == height &&
-      o.borderRadius == borderRadius;
+        o.width == width &&
+        o.height == height &&
+        o.borderRadius == borderRadius;
   }
 
   @override
   int get hashCode => width.hashCode ^ height.hashCode ^ borderRadius.hashCode;
 
   @override
-  String toString() => 'IndicatorShape width: $width, height: $height, borderRadius: $borderRadius';
+  String toString() =>
+      'IndicatorShape width: $width, height: $height, borderRadius: $borderRadius';
 }

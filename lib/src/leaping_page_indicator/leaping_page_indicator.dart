@@ -5,17 +5,26 @@ import 'package:ink_page_indicator/src/src.dart';
 import 'leaping_page_indicator_data.dart';
 import 'leaping_page_indicator_painter.dart';
 
+// ignore_for_file: public_member_api_docs
+
 /// The style of an [LeapingPageIndicator].
 enum LeapingStyle {
   normal,
 }
 
+/// An InkPageIndicator that jumps between the invidividual
+/// dots.
 class LeapingPageIndicator extends PageIndicator {
   final double radii;
   final LeapingStyle style;
+
+  /// Creates an InkPageIndicator that jumps between the invidividual
+  /// dots.
   LeapingPageIndicator({
     Key key,
-    @required PageIndicatorController controller,
+    PageIndicatorController controller,
+    ValueNotifier<double> page,
+    int pageCount,
     double leapHeight,
     this.style = LeapingStyle.normal,
     IndicatorShape shape,
@@ -32,6 +41,8 @@ class LeapingPageIndicator extends PageIndicator {
         super(
           key: key,
           shape: shape,
+          page: page,
+          pageCount: pageCount,
           activeShape: activeShape,
           controller: controller,
           activeColor: activeColor,
@@ -44,7 +55,9 @@ class LeapingPageIndicator extends PageIndicator {
   LeapingPageIndicatorState createState() => LeapingPageIndicatorState();
 }
 
-class LeapingPageIndicatorState extends PageIndicatorState<LeapingPageIndicator, LeapingIndicatorData> {
+// ignore: public_member_api_docs
+class LeapingPageIndicatorState
+    extends PageIndicatorState<LeapingPageIndicator, LeapingIndicatorData> {
   @override
   LeapingIndicatorData get newValue => LeapingIndicatorData(
         activeColor: widget.activeColor,
@@ -57,7 +70,6 @@ class LeapingPageIndicatorState extends PageIndicatorState<LeapingPageIndicator,
 
   @override
   Widget builder(BuildContext context, LeapingIndicatorData data) {
-    print(pageCount);
     if (pageCount == 0) return SizedBox(height: widget.shape.height);
 
     return Padding(

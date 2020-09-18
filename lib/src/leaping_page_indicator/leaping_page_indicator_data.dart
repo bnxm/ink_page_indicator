@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:ink_page_indicator/src/src.dart';
 
+// ignore_for_file: public_member_api_docs
+
 class LeapingIndicatorData extends IndicatorData {
   final double radii;
   LeapingIndicatorData({
@@ -20,7 +22,7 @@ class LeapingIndicatorData extends IndicatorData {
           shape: shape,
           activeShape: activeShape,
         );
-        
+
   @override
   LeapingIndicatorData lerpTo(IndicatorData b, double t) {
     if (b is LeapingIndicatorData) {

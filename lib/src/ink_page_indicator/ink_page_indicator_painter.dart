@@ -5,8 +5,10 @@ import 'package:ink_page_indicator/src/src.dart';
 
 import 'ink_page_indicator_data.dart';
 
-class InkPageIndicatorPainter
-    extends PageIndicatorPainter<InkPageIndicatorData, InkPageIndicator, InkPageIndicatorState> {
+// ignore_for_file: public_member_api_docs
+
+class InkPageIndicatorPainter extends PageIndicatorPainter<InkPageIndicatorData,
+    InkPageIndicator, InkPageIndicatorState> {
   InkPageIndicatorPainter(
     InkPageIndicatorState parent,
     InkPageIndicatorData data,
@@ -15,14 +17,15 @@ class InkPageIndicatorPainter
   InkStyle get style => widget.style;
   Color get inkColor => data.inkColor ?? inactiveColor;
 
-  bool get animateLastPageDot => style == InkStyle.simple || style == InkStyle.normal;
+  bool get animateLastPageDot =>
+      style == InkStyle.simple || style == InkStyle.normal;
 
   @override
   double get activeDotProgress {
     switch (style) {
       case InkStyle.simple:
       case InkStyle.normal:
-        return fInRange(0.4, 0.8, progress);
+        return interval(0.4, 0.8, progress);
       default:
         return progress;
     }
@@ -32,9 +35,9 @@ class InkPageIndicatorPainter
   double get inactiveDotProgress {
     switch (style) {
       case InkStyle.normal:
-        return fInRange(0.0, 0.4, progress);
+        return interval(0.0, 0.4, progress);
       case InkStyle.simple:
-        return fInRange(0.0, 0.5, progress);
+        return interval(0.0, 0.5, progress);
       default:
         return progress;
     }
@@ -73,7 +76,7 @@ class InkPageIndicatorPainter
 
       final animateLastDotInAgain = isCurrent && animateLastPageDot;
       if (animateLastDotInAgain) {
-        shape = shape.scale(fInRange(0.9, 1.0, progress));
+        shape = shape.scale(interval(0.9, 1.0, progress));
       }
 
       if (style == InkStyle.transition && (isCurrent || isNext)) {
@@ -120,7 +123,7 @@ class InkPageIndicatorPainter
       ..isAntiAlias = true;
 
     final startProgress = inactiveDotProgress;
-    final endProgress = fInRange(0.8, 1.0, progress);
+    final endProgress = interval(0.8, 1.0, progress);
 
     final start = lerpDouble(currentDot, nextDot, startProgress);
     final end = lerpDouble(currentDot, nextDot, endProgress);
@@ -144,7 +147,7 @@ class InkPageIndicatorPainter
     if (isInTransition) {
       drawInkInTransition(paint, inkProgress);
     } else {
-      final endTransitionProgress = fInRange(0.8, 1.0, progress);
+      final endTransitionProgress = interval(0.8, 1.0, progress);
       drawEndTransition(paint, endTransitionProgress);
     }
   }
@@ -182,7 +185,7 @@ class InkPageIndicatorPainter
   Color getNextActiveInkTransitionColor() => Color.lerp(
         inactiveColor,
         inkColor,
-        fInRange(0.0, 0.5, inactiveDotProgress),
+        interval(0.0, 0.5, inactiveDotProgress),
       );
 
   @protected

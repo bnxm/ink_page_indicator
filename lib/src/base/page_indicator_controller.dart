@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:ink_page_indicator/src/base/base.dart';
 
+// ignore_for_file: public_member_api_docs
+
 /// A PageController for a PageView that uses a [PageIndicator].
 ///
-/// This PageController should be used when explicitly animating
-/// to pages using `animateToPage` in order for the [PageIndicator]
-/// to be properly displayed.
+/// The PageController can infer the `page` as well as the `pageCount`
+/// for a [PageIndicator].
 class PageIndicatorController extends PageController {
   PageIndicatorController({
     int initialPage = 0,

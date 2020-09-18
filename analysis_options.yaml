@@ -631,7 +631,7 @@ linter:
 
     # Definitely not a rule for standard dart code. Maybe relevant for packages
     # https://dart-lang.github.io/linter/lints/public_member_api_docs.html
-    # - public_member_api_docs
+    - public_member_api_docs
 
     # Hints accidental recursions
     # pedantic: enabled

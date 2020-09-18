@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ink_page_indicator/ink_page_indicator.dart';
 
+// ignore_for_file: public_member_api_docs
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -24,6 +26,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final ValueNotifier<double> page = ValueNotifier(0.0);
   PageIndicatorController controller;
 
   IndicatorShape shape;
@@ -32,7 +35,10 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    controller = PageIndicatorController();
+    controller = PageIndicatorController()
+      ..addListener(() {
+        page.value = controller.page;
+      });
   }
 
   List<Widget> _createChildren(int count) {
@@ -54,11 +60,12 @@ class _HomeState extends State<Home> {
               gap: 32,
               padding: 16,
               shape: shape,
+              page: page,
+              pageCount: 5,
               activeShape: activeShape,
               inactiveColor: Colors.grey.shade500,
               activeColor: Colors.grey.shade700,
               inkColor: Colors.grey.shade400,
-              controller: controller,
               style: style,
             ),
           ),

@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 
 import 'package:ink_page_indicator/src/src.dart';
 
-abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndicator, P extends PageIndicatorState>
-    extends CustomPainter {
+// ignore_for_file: public_member_api_docs
+
+abstract class PageIndicatorPainter<
+    D extends IndicatorData,
+    W extends PageIndicator,
+    P extends PageIndicatorState> extends CustomPainter {
   final P parent;
   final D data;
   PageIndicatorPainter(
@@ -136,7 +140,8 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
     }
   }
 
-  void drawIndicator(dynamic offset, Paint paint, [IndicatorShape customShape]) {
+  void drawIndicator(dynamic offset, Paint paint,
+      [IndicatorShape customShape]) {
     assert(offset is Offset || offset is num);
 
     final shape = customShape ?? this.shape;
@@ -151,7 +156,8 @@ abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndic
     canvas.drawRRect(rrect, paint);
   }
 
-  RRect getRRectFromEndPoints(double start, double end, [IndicatorShape customShape]) {
+  RRect getRRectFromEndPoints(double start, double end,
+      [IndicatorShape customShape]) {
     final from = math.min(start, end);
     final to = math.max(start, end);
 

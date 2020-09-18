@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'util.dart';
 
+// ignore_for_file: public_member_api_docs
+
 class PressureStop implements Comparable<PressureStop> {
   final double thickness;
   final double stop;
@@ -91,7 +93,7 @@ class PressurePath {
       }
     }
 
-    final progress = fInRange(
+    final progress = interval(
       lastStop.stop,
       targetStop.stop,
       fraction,

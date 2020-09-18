@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:ink_page_indicator/src/src.dart';
 
+// ignore_for_file: public_member_api_docs
+
 class InkPageIndicatorData extends IndicatorData {
   final Color inkColor;
   InkPageIndicatorData({

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+// ignore_for_file: public_member_api_docs
+
 /// A base Widget for implicit animations.
 abstract class ImplicitAnimation extends StatefulWidget {
   final Duration duration;
@@ -13,8 +15,8 @@ abstract class ImplicitAnimation extends StatefulWidget {
         super(key: key);
 }
 
-abstract class ImplicitAnimationState<T, W extends ImplicitAnimation> extends State<W>
-    with SingleTickerProviderStateMixin {
+abstract class ImplicitAnimationState<T, W extends ImplicitAnimation>
+    extends State<W> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   AnimationController get controller => _controller;
 
