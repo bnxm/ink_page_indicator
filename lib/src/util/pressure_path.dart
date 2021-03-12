@@ -13,7 +13,7 @@ class PressureStop implements Comparable<PressureStop> {
   PressureStop({
     required this.thickness,
     required this.stop,
-  })  : assert(stop >= 0.0 && stop <= 1.0),
+  })   : assert(stop >= 0.0 && stop <= 1.0),
         assert(thickness >= 0.0);
 
   @override

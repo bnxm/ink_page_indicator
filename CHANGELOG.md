@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0
+## 0.2.1
 * **Added** NNBD support
 
 ### 0.1.5

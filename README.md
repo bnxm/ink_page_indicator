@@ -11,7 +11,7 @@ A package that offers various page indicators inlcuding a Flutter implementation
 Add it to your `pubspec.yaml` file:
 ```yaml
 dependencies:
-  ink_page_indicator: ^0.2.0
+  ink_page_indicator: ^0.2.1
 ```
 Install packages from the command line
 ```
@@ -133,14 +133,13 @@ final activeShape = IndicatorShape(
 );
 
 InkPageIndicator(
-    controller: controller,
-    gap: 32,
-    padding: 16,
-    shape: shape,
-    style: InkStyle.transition,
-    activeShape: activeShape,
-    inactiveColor: Colors.grey.shade400,
-    activeColor: Colors.grey.shade700,
-  ),
-)
+  controller: controller,
+  gap: 32,
+  padding: 16,
+  shape: shape,
+  style: InkStyle.transition,
+  activeShape: activeShape,
+  inactiveColor: Colors.grey.shade400,
+  activeColor: Colors.grey.shade700,
+);
 ```

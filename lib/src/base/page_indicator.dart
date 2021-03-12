@@ -60,7 +60,7 @@ abstract class PageIndicator extends ImplicitAnimation {
     required this.activeColor,
     required this.inactiveColor,
     required this.gap,
-  })  : shape = shape ?? IndicatorShape.circle(6),
+  })   : shape = shape ?? IndicatorShape.circle(6),
         activeShape = activeShape ?? shape ?? IndicatorShape.circle(6),
         assert(
           controller != null || (page != null && pageCount != null),
