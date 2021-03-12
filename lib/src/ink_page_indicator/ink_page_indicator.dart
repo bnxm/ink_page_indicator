@@ -24,29 +24,26 @@ enum InkStyle {
 class InkPageIndicator extends PageIndicator {
   /// The color of the ink between the dots
   /// for some [IntStyle]s.
-  final Color inkColor;
+  final Color? inkColor;
 
   /// The style of the transition between the dots.
   final InkStyle style;
 
   /// Creates a Flutter implementation of the InkPageIndicator.
   InkPageIndicator({
-    Key key,
-    PageIndicatorController controller,
-    ValueNotifier<double> page,
-    int pageCount,
+    Key? key,
+    PageIndicatorController? controller,
+    ValueNotifier<double>? page,
+    int? pageCount,
     this.style = InkStyle.simple,
     this.inkColor,
-    IndicatorShape shape,
-    IndicatorShape activeShape,
+    IndicatorShape? shape,
+    IndicatorShape? activeShape,
     Color activeColor = Colors.black,
     Color inactiveColor = Colors.grey,
     double gap = 12.0,
     double padding = 8.0,
-  })  : assert(style != null),
-        assert(activeColor != null),
-        assert(inactiveColor != null),
-        assert(gap != null && gap >= 0.0),
+  })  : assert(gap >= 0.0),
         super(
           key: key,
           shape: shape,

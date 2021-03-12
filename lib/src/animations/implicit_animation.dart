@@ -8,60 +8,41 @@ abstract class ImplicitAnimation extends StatefulWidget {
   final Duration duration;
   final Curve curve;
   const ImplicitAnimation(
-    Key key,
+    Key? key,
     this.duration,
     this.curve,
-  )   : assert(duration != null),
-        super(key: key);
+  ) : super(key: key);
 }
 
-abstract class ImplicitAnimationState<T, W extends ImplicitAnimation>
-    extends State<W> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  AnimationController get controller => _controller;
+abstract class ImplicitAnimationState<T, W extends ImplicitAnimation> extends State<W>
+    with SingleTickerProviderStateMixin {
+  late final controller = AnimationController(
+    duration: widget.duration,
+    vsync: this,
+  )..value = 1.0;
 
-  Animation<double> _animation;
-  Animation<double> get animation => _animation;
+  late var animation = CurvedAnimation(
+    curve: widget.curve,
+    parent: controller,
+  )..addListener(
+      () => value = lerp(v, oldValue, newValue),
+    );
 
   double get v => animation.value;
   T get newValue;
-  T value;
-  T oldValue;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    )..value = 1.0;
-
-    _animation = CurvedAnimation(
-      curve: widget.curve ?? Curves.linear,
-      parent: controller,
-    );
-
-    value = newValue;
-    oldValue = newValue;
-
-    animation.addListener(
-      () => value = lerp(v, oldValue, newValue),
-    );
-  }
+  late T value = newValue;
+  late T oldValue = newValue;
 
   @override
   void didUpdateWidget(W oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.duration != widget.duration) {
-      controller.duration = widget.duration;
-    }
 
-    if (oldWidget.curve != widget.curve) {
-      _animation = CurvedAnimation(
-        curve: widget.curve ?? Curves.linear,
-        parent: controller,
-      );
-    }
+    controller.duration = widget.duration;
+
+    animation = CurvedAnimation(
+      curve: widget.curve,
+      parent: controller,
+    );
 
     if (value != newValue) {
       oldValue = value;
@@ -79,9 +60,7 @@ abstract class ImplicitAnimationState<T, W extends ImplicitAnimation>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: animation,
-      builder: (context, child) {
-        return builder(context, value);
-      },
+      builder: (context, child) => builder(context, value),
     );
   }
 

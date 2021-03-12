@@ -11,11 +11,11 @@ abstract class IndicatorData {
   final IndicatorShape shape;
   final IndicatorShape activeShape;
   IndicatorData({
-    @required this.activeColor,
-    @required this.inactiveColor,
-    @required this.gap,
-    @required this.shape,
-    @required this.activeShape,
+    required this.activeColor,
+    required this.inactiveColor,
+    required this.gap,
+    required this.shape,
+    required this.activeShape,
   });
 
   IndicatorData lerpTo(IndicatorData b, double t);

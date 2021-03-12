@@ -15,9 +15,9 @@ class IndicatorShape {
   /// Creates a shape that can be used to customize the appearance
   /// of the indicators in a [PageIndicator].
   IndicatorShape({
-    @required this.width,
-    @required this.height,
-    BorderRadius borderRadius,
+    required this.width,
+    required this.height,
+    BorderRadius? borderRadius,
   }) : borderRadius = borderRadius ??
             BorderRadius.circular(
               math.min(width, height),
@@ -34,9 +34,9 @@ class IndicatorShape {
   }
 
   IndicatorShape copyWith({
-    double width,
-    double height,
-    BorderRadius borderRadius,
+    double? width,
+    double? height,
+    BorderRadius? borderRadius,
   }) {
     return IndicatorShape(
       width: width ?? this.width,
@@ -47,8 +47,8 @@ class IndicatorShape {
 
   IndicatorShape lerpTo(IndicatorShape b, double t) {
     return IndicatorShape(
-      width: lerpDouble(width, b.width, t),
-      height: lerpDouble(height, b.height, t),
+      width: lerpDouble(width, b.width, t)!,
+      height: lerpDouble(height, b.height, t)!,
       borderRadius: BorderRadius.lerp(borderRadius, b.borderRadius, t),
     );
   }

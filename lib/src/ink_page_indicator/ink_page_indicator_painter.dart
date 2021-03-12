@@ -87,10 +87,10 @@ class InkPageIndicatorPainter extends PageIndicatorPainter<InkPageIndicatorData,
             isCurrent ? activeColor : inactiveColor,
             isCurrent ? inactiveColor : activeColor,
             progress,
-          );
+          )!;
         }
       } else if (style == InkStyle.normal && isNext) {
-        paint.color = getNextActiveInkTransitionColor();
+        paint.color = getNextActiveInkTransitionColor()!;
       } else {
         paint.color = inactiveColor;
       }
@@ -125,8 +125,8 @@ class InkPageIndicatorPainter extends PageIndicatorPainter<InkPageIndicatorData,
     final startProgress = inactiveDotProgress;
     final endProgress = interval(0.8, 1.0, progress);
 
-    final start = lerpDouble(currentDot, nextDot, startProgress);
-    final end = lerpDouble(currentDot, nextDot, endProgress);
+    final start = lerpDouble(currentDot, nextDot, startProgress)!;
+    final end = lerpDouble(currentDot, nextDot, endProgress)!;
     final shape = activeShape;
     final rrect = getRRectFromEndPoints(start, end, shape);
 
@@ -160,7 +160,7 @@ class InkPageIndicatorPainter extends PageIndicatorPainter<InkPageIndicatorData,
 
     Path createInkPath(double origin) => Path()
       ..moveTo(origin, dy)
-      ..lineTo(lerpDouble(origin, dx, inkProgress), dy);
+      ..lineTo(lerpDouble(origin, dx, inkProgress)!, dy);
 
     void drawInkPath(Path path, IndicatorShape shape) {
       drawPressurePath(path, paint, [
@@ -174,7 +174,7 @@ class InkPageIndicatorPainter extends PageIndicatorPainter<InkPageIndicatorData,
 
     drawInkPath(fromInk, activeShape);
 
-    paint.color = getNextActiveInkTransitionColor();
+    paint.color = getNextActiveInkTransitionColor()!;
 
     drawInkPath(toInk, shape);
   }
@@ -182,7 +182,7 @@ class InkPageIndicatorPainter extends PageIndicatorPainter<InkPageIndicatorData,
   // Transition between the inactive item color and the
   // ink color.
   @protected
-  Color getNextActiveInkTransitionColor() => Color.lerp(
+  Color? getNextActiveInkTransitionColor() => Color.lerp(
         inactiveColor,
         inkColor,
         interval(0.0, 0.5, inactiveDotProgress),
@@ -190,7 +190,7 @@ class InkPageIndicatorPainter extends PageIndicatorPainter<InkPageIndicatorData,
 
   @protected
   void drawEndTransition(Paint paint, double transitionProgress) {
-    final start = lerpDouble(currentDot, nextDot, transitionProgress);
+    final start = lerpDouble(currentDot, nextDot, transitionProgress)!;
     final rrect = getRRectFromEndPoints(start, nextDot, activeShape);
 
     canvas.drawRRect(rrect, paint);

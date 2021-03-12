@@ -36,7 +36,7 @@ class LeapingPageIndicatorPainter extends PageIndicatorPainter<
     final curve = Path()
       ..moveTo(currentDot, dy)
       ..quadraticBezierTo(
-        lerpDouble(currentDot, nextDot, 0.5),
+        lerpDouble(currentDot, nextDot, 0.5)!,
         dy - radii,
         nextDot,
         dy,

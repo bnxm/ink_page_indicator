@@ -21,23 +21,20 @@ class LeapingPageIndicator extends PageIndicator {
   /// Creates an InkPageIndicator that jumps between the invidividual
   /// dots.
   LeapingPageIndicator({
-    Key key,
-    PageIndicatorController controller,
-    ValueNotifier<double> page,
-    int pageCount,
-    double leapHeight,
+    Key? key,
+    PageIndicatorController? controller,
+    ValueNotifier<double>? page,
+    int? pageCount,
+    double? leapHeight,
     this.style = LeapingStyle.normal,
-    IndicatorShape shape,
-    IndicatorShape activeShape,
+    IndicatorShape? shape,
+    IndicatorShape? activeShape,
     Color activeColor = Colors.black,
     Color inactiveColor = Colors.grey,
     double gap = 12.0,
     double padding = 8.0,
   })  : radii = leapHeight ?? gap,
-        assert(style != null),
-        assert(activeColor != null),
-        assert(inactiveColor != null),
-        assert(gap != null && gap >= 0.0),
+        assert(gap >= 0.0),
         super(
           key: key,
           shape: shape,
@@ -55,7 +52,6 @@ class LeapingPageIndicator extends PageIndicator {
   LeapingPageIndicatorState createState() => LeapingPageIndicatorState();
 }
 
-// ignore: public_member_api_docs
 class LeapingPageIndicatorState
     extends PageIndicatorState<LeapingPageIndicator, LeapingIndicatorData> {
   @override

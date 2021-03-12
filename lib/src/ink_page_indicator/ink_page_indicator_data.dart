@@ -7,14 +7,14 @@ import 'package:ink_page_indicator/src/src.dart';
 // ignore_for_file: public_member_api_docs
 
 class InkPageIndicatorData extends IndicatorData {
-  final Color inkColor;
+  final Color? inkColor;
   InkPageIndicatorData({
-    @required this.inkColor,
-    @required Color activeColor,
-    @required Color inactiveColor,
-    @required double gap,
-    @required IndicatorShape shape,
-    @required IndicatorShape activeShape,
+    required this.inkColor,
+    required Color activeColor,
+    required Color inactiveColor,
+    required double gap,
+    required IndicatorShape shape,
+    required IndicatorShape activeShape,
   }) : super(
           activeColor: activeColor,
           inactiveColor: inactiveColor,
@@ -27,10 +27,10 @@ class InkPageIndicatorData extends IndicatorData {
   InkPageIndicatorData lerpTo(IndicatorData b, double t) {
     if (b is InkPageIndicatorData) {
       return InkPageIndicatorData(
-        activeColor: Color.lerp(activeColor, b.activeColor, t),
-        inactiveColor: Color.lerp(inactiveColor, b.inactiveColor, t),
+        activeColor: Color.lerp(activeColor, b.activeColor, t)!,
+        inactiveColor: Color.lerp(inactiveColor, b.inactiveColor, t)!,
         inkColor: Color.lerp(inkColor, b.inkColor, t),
-        gap: lerpDouble(gap, b.gap, t),
+        gap: lerpDouble(gap, b.gap, t)!,
         shape: shape.lerpTo(b.shape, t),
         activeShape: activeShape.lerpTo(b.activeShape, t),
       );

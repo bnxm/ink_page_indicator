@@ -19,7 +19,7 @@ class PageIndicatorController extends PageController {
           viewportFraction: viewportFraction,
         );
 
-  double get viewportSize => hasClients ? position?.viewportDimension ?? 0 : 0;
+  double get viewportSize => hasClients ? position.viewportDimension : 0;
 
   int get pageCount {
     if (viewportSize == 0) return 0;
@@ -32,7 +32,7 @@ class PageIndicatorController extends PageController {
   // controller.
   final List<PageIndicatorState> _indicators = [];
 
-  void Function(int page, Duration duration) onAnimateToPage;
+  void Function(int page, Duration duration)? onAnimateToPage;
 
   @override
   Future<void> animateToPage(

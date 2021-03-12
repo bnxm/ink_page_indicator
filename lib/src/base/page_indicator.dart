@@ -17,17 +17,17 @@ abstract class PageIndicator extends ImplicitAnimation {
   ///
   /// Thus, when a controller is provided, [page] and [pageCount]
   /// must be null.
-  final PageIndicatorController controller;
+  final PageIndicatorController? controller;
 
   /// A ValueNotifer for the current page.
   ///
   /// When this value is provided, [controller] must be null.
-  final ValueNotifier<double> page;
+  final ValueNotifier<double>? page;
 
   /// The page count.
   ///
   /// When this value is provided, [controller] must be null.
-  final int pageCount;
+  final int? pageCount;
   final double padding;
 
   /// The color of the active dot.
@@ -50,23 +50,22 @@ abstract class PageIndicator extends ImplicitAnimation {
 
   /// Creates the superclass for all page indicators.
   PageIndicator({
-    Key key,
-    @required IndicatorShape shape,
-    @required IndicatorShape activeShape,
-    @required this.controller,
-    @required this.page,
-    @required this.pageCount,
-    @required this.padding,
-    @required this.activeColor,
-    @required this.inactiveColor,
-    @required this.gap,
+    Key? key,
+    required IndicatorShape? shape,
+    required IndicatorShape? activeShape,
+    required this.controller,
+    required this.page,
+    required this.pageCount,
+    required this.padding,
+    required this.activeColor,
+    required this.inactiveColor,
+    required this.gap,
   })  : shape = shape ?? IndicatorShape.circle(6),
         activeShape = activeShape ?? shape ?? IndicatorShape.circle(6),
         assert(
           controller != null || (page != null && pageCount != null),
           'Either a PageIndicatorController has to be provided or the page and page count have to be specifed manually',
         ),
-        assert(padding != null),
         super(
           key,
           const Duration(milliseconds: 400),
@@ -78,10 +77,10 @@ abstract class PageIndicatorState<P extends PageIndicator,
     D extends IndicatorData> extends ImplicitAnimationState<D, P> {
   @nonVirtual
   @protected
-  PageIndicatorController get pageController => widget.controller;
+  PageIndicatorController? get pageController => widget.controller;
 
   @nonVirtual
-  int get pageCount => widget.pageCount ?? pageController.pageCount;
+  int get pageCount => widget.pageCount ?? pageController!.pageCount;
 
   @nonVirtual
   int get maxPages => max(pageCount - 1, 0);
@@ -104,28 +103,28 @@ abstract class PageIndicatorState<P extends PageIndicator,
 
   bool inAnimation = false;
 
-  ScrollDirection _dir;
-  ScrollDirection get dir => _dir;
+  ScrollDirection? _dir;
+  ScrollDirection? get dir => _dir;
 
   @override
   void initState() {
     super.initState();
 
     if (pageController != null) {
-      _currentPage = pageController.initialPage ?? 0;
+      _currentPage = pageController!.initialPage;
       _nextPage = _currentPage + 1;
 
-      pageController
+      pageController!
         ..registerIndicator(this)
         ..addListener(_pageControllerListener);
 
       // Call the listener once the indicator is laid out to
       // recompute the page count.
-      WidgetsBinding.instance.addPostFrameCallback(
+      WidgetsBinding.instance!.addPostFrameCallback(
         (_) => _pageControllerListener(),
       );
     } else if (widget.page != null && widget.pageCount != null) {
-      widget.page.addListener(_pageListener);
+      widget.page!.addListener(_pageListener);
     }
   }
 
@@ -137,10 +136,10 @@ abstract class PageIndicatorState<P extends PageIndicator,
   }
 
   void _pageControllerListener() {
-    if (!pageController.hasClients) return;
+    if (!pageController!.hasClients) return;
 
-    _page = pageController.page;
-    _dir = pageController.position.userScrollDirection;
+    _page = pageController!.page!;
+    _dir = pageController!.position.userScrollDirection;
 
     _findNextPageIndices();
     _calculateScrollProgress();
@@ -149,10 +148,10 @@ abstract class PageIndicatorState<P extends PageIndicator,
   }
 
   void _pageListener() {
-    _dir = page < widget.page.value
+    _dir = page < widget.page!.value
         ? ScrollDirection.forward
         : ScrollDirection.reverse;
-    _page = widget.page.value;
+    _page = widget.page!.value;
     _findNextPageIndices();
     _calculateScrollProgress();
     setState(() {});

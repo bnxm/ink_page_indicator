@@ -1,7 +1,10 @@
 # Changelog
 
-### 0.1.1 - 0.1.5
-- Bug fixes.
+## 0.2.0
+* **Added** NNBD support
+
+### 0.1.5
+* **Fixed** Bugs
 
 ## 0.1.0 
 - Initial release

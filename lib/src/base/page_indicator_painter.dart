@@ -7,9 +7,7 @@ import 'package:ink_page_indicator/src/src.dart';
 
 // ignore_for_file: public_member_api_docs
 
-abstract class PageIndicatorPainter<
-    D extends IndicatorData,
-    W extends PageIndicator,
+abstract class PageIndicatorPainter<D extends IndicatorData, W extends PageIndicator,
     P extends PageIndicatorState> extends CustomPainter {
   final P parent;
   final D data;
@@ -22,10 +20,10 @@ abstract class PageIndicatorPainter<
   IndicatorShape shape;
   IndicatorShape activeShape;
 
-  W get widget => parent.widget;
+  W get widget => parent.widget as W;
 
-  Size size;
-  Canvas canvas;
+  late Size size;
+  late Canvas canvas;
 
   double get width => size.width;
   double get height => size.height;
@@ -97,7 +95,7 @@ abstract class PageIndicatorPainter<
     }
   }
 
-  double getDxForFraction(double fraction) {
+  double? getDxForFraction(double fraction) {
     assert(dots.isNotEmpty);
 
     return lerpDouble(currentDot, nextDot, fraction);
@@ -140,8 +138,7 @@ abstract class PageIndicatorPainter<
     }
   }
 
-  void drawIndicator(dynamic offset, Paint paint,
-      [IndicatorShape customShape]) {
+  void drawIndicator(dynamic offset, Paint paint, [IndicatorShape? customShape]) {
     assert(offset is Offset || offset is num);
 
     final shape = customShape ?? this.shape;
@@ -156,8 +153,7 @@ abstract class PageIndicatorPainter<
     canvas.drawRRect(rrect, paint);
   }
 
-  RRect getRRectFromEndPoints(double start, double end,
-      [IndicatorShape customShape]) {
+  RRect getRRectFromEndPoints(double start, double end, [IndicatorShape? customShape]) {
     final from = math.min(start, end);
     final to = math.max(start, end);
 
@@ -174,7 +170,7 @@ abstract class PageIndicatorPainter<
     return getRRectFromRect(rect, customShape);
   }
 
-  RRect getRRectFromRect(Rect rect, [IndicatorShape customShape]) {
+  RRect getRRectFromRect(Rect rect, [IndicatorShape? customShape]) {
     final borderRadius = customShape?.borderRadius ?? activeShape.borderRadius;
 
     return RRect.fromLTRBAndCorners(
@@ -207,7 +203,7 @@ abstract class PageIndicatorPainter<
     try {
       final metrics = path.computeMetrics().first;
       final length = metrics.length;
-      return metrics.getTangentForOffset(length * fraction).position;
+      return metrics.getTangentForOffset(length * fraction)!.position;
       // ignore: avoid_catching_errors
     } on Error {
       return Offset.zero;

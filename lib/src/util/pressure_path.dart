@@ -11,8 +11,8 @@ class PressureStop implements Comparable<PressureStop> {
   final double thickness;
   final double stop;
   PressureStop({
-    @required this.thickness,
-    @required this.stop,
+    required this.thickness,
+    required this.stop,
   })  : assert(stop >= 0.0 && stop <= 1.0),
         assert(thickness >= 0.0);
 
@@ -30,23 +30,23 @@ class PressurePath {
     _computeMetrics();
   }
 
-  PathMetric _metrics;
-  PathMetric get metrics => _metrics;
+  PathMetric? _metrics;
+  PathMetric? get metrics => _metrics;
 
-  double _length;
-  double get length => _length;
+  double? _length;
+  double? get length => _length;
 
   void _computeMetrics() {
     _metrics = path.computeMetrics().first;
-    _length = metrics.length;
+    _length = metrics!.length;
   }
 
-  void draw(Canvas canvas, Paint paint) {
+  void draw(Canvas? canvas, Paint paint) {
     final prevStyle = paint.style;
     final prevStrokeWidth = paint.strokeWidth;
 
     if (stops.length == 1) {
-      _drawPath(canvas, paint);
+      _drawPath(canvas!, paint);
     } else {
       _drawMultiStopPath(canvas, paint);
     }
@@ -55,14 +55,14 @@ class PressurePath {
     paint.strokeWidth = prevStrokeWidth;
   }
 
-  void _drawMultiStopPath(Canvas canvas, Paint paint) {
+  void _drawMultiStopPath(Canvas? canvas, Paint paint) {
     paint.style = PaintingStyle.fill;
 
     double stepSize = 0.5;
-    for (var step = 0.0; step < length; step += stepSize) {
-      final fraction = step / length;
-      final offset = metrics.getTangentForOffset(step).position;
-      final thickness = getThicknessForFraction(fraction);
+    for (var step = 0.0; step < length!; step += stepSize) {
+      final fraction = step / length!;
+      final offset = metrics!.getTangentForOffset(step)!.position;
+      final thickness = getThicknessForFraction(fraction)!;
 
       stepSize = math.min(
         0.5,
@@ -70,7 +70,7 @@ class PressurePath {
       );
 
       paint.strokeWidth = thickness;
-      canvas.drawCircle(
+      canvas!.drawCircle(
         offset,
         thickness / 2,
         paint,
@@ -78,7 +78,7 @@ class PressurePath {
     }
   }
 
-  double getThicknessForFraction(double fraction) {
+  double? getThicknessForFraction(double fraction) {
     PressureStop targetStop = stops[0];
     PressureStop lastStop = stops[0];
 

@@ -10,11 +10,11 @@ class LeapingIndicatorData extends IndicatorData {
   final double radii;
   LeapingIndicatorData({
     this.radii = 8.0,
-    @required Color activeColor,
-    @required Color inactiveColor,
-    @required double gap,
-    @required IndicatorShape shape,
-    @required IndicatorShape activeShape,
+    required Color activeColor,
+    required Color inactiveColor,
+    required double gap,
+    required IndicatorShape shape,
+    required IndicatorShape activeShape,
   }) : super(
           activeColor: activeColor,
           inactiveColor: inactiveColor,
@@ -27,10 +27,10 @@ class LeapingIndicatorData extends IndicatorData {
   LeapingIndicatorData lerpTo(IndicatorData b, double t) {
     if (b is LeapingIndicatorData) {
       return LeapingIndicatorData(
-        activeColor: Color.lerp(activeColor, b.activeColor, t),
-        inactiveColor: Color.lerp(inactiveColor, b.inactiveColor, t),
-        radii: lerpDouble(radii, b.radii, t),
-        gap: lerpDouble(gap, b.gap, t),
+        activeColor: Color.lerp(activeColor, b.activeColor, t)!,
+        inactiveColor: Color.lerp(inactiveColor, b.inactiveColor, t)!,
+        radii: lerpDouble(radii, b.radii, t)!,
+        gap: lerpDouble(gap, b.gap, t)!,
         shape: shape.lerpTo(b.shape, t),
         activeShape: activeShape.lerpTo(b.activeShape, t),
       );
